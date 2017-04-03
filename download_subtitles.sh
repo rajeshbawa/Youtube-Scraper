@@ -54,12 +54,18 @@ cat "$cat";
 read -n1; 
 done
 
+for file in *.txt;
+do
+cat "$file" >> output_concatFile.txt
+done
 #fi
 
 cd ../../
 mv subtitles /Users/rajesh13/Documents/health_datascience/Youtube_scrapping_tool/
 mv urls.txt /Users/rajesh13/Documents/health_datascience/Youtube_scrapping_tool/
-cd subtitles
+cd /Users/rajesh13/Documents/health_datascience/Youtube_scrapping_tool/subtitles/transcript/
+mv output_concatFile.txt /Users/rajesh13/Documents/health_datascience/Youtube_scrapping_tool/
+cd /Users/rajesh13/Documents/health_datascience/Youtube_scrapping_tool/subtitles/
 rm *.vtt
 exit;
 

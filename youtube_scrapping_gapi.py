@@ -6,6 +6,7 @@ import subprocess
 #import youtube_dl
 import googleapiclient
 import oauth2client
+import wordcloud
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from oauth2client.tools import argparser
@@ -19,10 +20,11 @@ ids = 'EH8R5eB8ioo'
 #ids = '9bZkp7q19f0,eHvccEXfacM'
 print("\033[1m")
 keyword = str(input("Please input the words you want to search for:\n"))
-print(keyword)
+numResults = int(input("How many videos do you want in the output?\n"))
+print("Getting %d %s videos: " %(numResults, keyword))
 print("\033[0m")
 search = youtube.search().list(q=keyword, type = "video", 
-part="id,snippet", maxResults=50).execute()
+part="id,snippet", maxResults=numResults).execute()
 results = youtube.videos().list(id=ids, part='snippet').execute()
 captions = youtube.captions().list(part="snippet",videoId=ids).execute()
 #captions_download = youtube.captions().download(id = "p1RlVpkbLVxp6OM_6EWQCIeaOCEdTtrR", tfmt=tfmt).execute()
@@ -65,6 +67,17 @@ print("\033[1m" + "The transcripts of videos are being downloaded" + "\033[0m")
 subprocess.call("/Users/rajesh13/Documents/health_datascience/Youtube_scrapping_tool/download_subtitles.sh", shell=True)
 
 print("\033[0m" + "Job is done! \n Please check the folder for results" + "\033[0m")
+'''
+path = '/Users/rajesh13/Documents/health_datascience/Youtube_scrapping_tool/subtitles/transcript'
+files = os.listdir(path)
+with open("output_concatFile.txt", "w") as fo: 
+    for infile in files:
+        with open(os.path.join(path, infile)) as fin:
+            for line in fin:
+                fo.write(line)
+    fo.close()
+'''
+
 '''
 calling youtube-dl program from bash 
 and then calling that bash program in python
