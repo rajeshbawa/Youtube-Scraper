@@ -59,6 +59,8 @@ done
 cd ../../
 mv subtitles /Users/rajesh13/Documents/health_datascience/Youtube_scrapping_tool/
 mv urls.txt /Users/rajesh13/Documents/health_datascience/Youtube_scrapping_tool/
+cd subtitles
+rm *.vtt
 exit;
 
 
