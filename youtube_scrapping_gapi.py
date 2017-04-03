@@ -17,7 +17,11 @@ youtube = build('youtube', 'v3', developerKey=DEVELOPER_KEY)
 ids = 'EH8R5eB8ioo'
 #viewCount = 1000000000
 #ids = '9bZkp7q19f0,eHvccEXfacM'
-search = youtube.search().list(q="tiny house", type = "video", 
+print("\033[1m")
+keyword = str(input("Please input the words you want to search for:\n"))
+print(keyword)
+print("\033[0m")
+search = youtube.search().list(q=keyword, type = "video", 
 part="id,snippet", maxResults=50).execute()
 results = youtube.videos().list(id=ids, part='snippet').execute()
 captions = youtube.captions().list(part="snippet",videoId=ids).execute()
@@ -29,22 +33,26 @@ for search_result in search.get("items", []):
         videos[search_result["id"]["videoId"]] = search_result["snippet"]["title"]
 
 
-print("Videos:\n", "\n".join(videos), "\n")
-s = ','.join(videos.keys())
-print(s)
+#print("Videos:\n", "\n".join(videos), "\n")
+#s = ','.join(videos.keys())
+#print(s)
 
 
-
+print("\033[1m")
+print("The titles of videos being downloaded are")
+print('\033[92m')
 for i in videos:
     print(videos[i])  
 
+
+print("\033[0m")
 
 urls = []
 for i in videos:
     urls.append("https://www.youtube.com/watch?v=" + i)
     
 
-urls
+#urls
 os.chdir("/Users/rajesh13/Documents/health_datascience/Youtube_scrapping_tool/youtube-dl/bin")
 thefile = open('urls.txt', 'w')
 
@@ -53,10 +61,10 @@ for i in urls:
 
 
 thefile.close()
+print("\033[1m" + "The transcripts of videos are being downloaded" + "\033[0m")
+subprocess.call("/Users/rajesh13/Documents/health_datascience/Youtube_scrapping_tool/download_subtitles.sh", shell=True)
 
-subprocess.call("/Users/rajesh13/Documents/health_datascience/Youtube_scrapping_tool/youtube-dl/bin/download_subtitles.sh", shell=True)
-
-#print("Job is done!")
+print("\033[0m" + "Job is done! \n Please check the folder for results" + "\033[0m")
 '''
 calling youtube-dl program from bash 
 and then calling that bash program in python

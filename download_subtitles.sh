@@ -12,7 +12,7 @@ youtube-dl --write-sub \
 --no-warnings \
 --ignore-errors \
 $line
-#echo -e "\033[1m*\033[0m" | tr '\n' ' '
+echo -e "\033[1m*\033[0m" | tr '\n' ' '
 done
 mv *.vtt subtitles/
 
@@ -28,13 +28,13 @@ sed -e 's/[0-9][0-9]:[0-9][0-9]:[0-9][0-9].[0-9][0-9][0-9].*%//g' \
 transcript/"`basename "$f" .en.vtt`.txt"
 done
 
-#printf "\n\n\n"
-#echo -e "\033[1mDone with Analysis!"
+printf "\n\n\n"
+echo -e "\033[1mDone with Analysis!"
 
 cd transcript;
 
-if false
-then
+#if false
+#then
 
 while true; 
 do
@@ -54,10 +54,11 @@ cat "$cat";
 read -n1; 
 done
 
-fi
+#fi
 
 cd ../../
 mv subtitles /Users/rajesh13/Documents/health_datascience/Youtube_scrapping_tool/
+mv urls.txt /Users/rajesh13/Documents/health_datascience/Youtube_scrapping_tool/
 exit;
 
 
