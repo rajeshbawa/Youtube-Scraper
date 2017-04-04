@@ -1,4 +1,5 @@
 import os
+import sys
 import argparse
 import random
 import subprocess
@@ -66,7 +67,30 @@ thefile.close()
 print("\033[1m" + "The transcripts of videos are being downloaded" + "\033[0m")
 subprocess.call("/Users/rajesh13/Documents/health_datascience/Youtube_scrapping_tool/download_subtitles.sh", shell=True)
 
-print("\033[0m" + "Job is done! \n Please check the folder for results" + "\033[0m")
+
+#d = path.dirname(__file__)
+#all_text = open(path.join(d, 'output_concatFile.txt')).read()
+#reload(sys)
+
+os.chdir("/Users/rajesh13/Documents/health_datascience/Youtube_scrapping_tool")
+all_text = open('output_concatFile.txt').read()
+wordcloud = wordcloud.WordCloud().generate(all_text)
+
+import matplotlib.pyplot as plt
+plt.switch_backend('agg')
+
+plt.figure(figsize=(10,7))
+plt.imshow(wordcloud, interpolation="bilinear")
+plt.axis('off')
+plt.savefig("wordcloud1.pdf",bbox_inches = "tight")
+
+plot_show = str(input("Would you like to see the wordcloud?\n Type yes or no\n"))
+if(plot_show == "yes"):
+    subprocess.call("open wordcloud1.pdf", shell=True)
+    print("\033[0m" + "Job is done! \n Please check the folder for results" + "\033[0m")
+else:
+    print("\033[0m" + "Job is done! \n Please check the folder for results" + "\033[0m")
+
 '''
 path = '/Users/rajesh13/Documents/health_datascience/Youtube_scrapping_tool/subtitles/transcript'
 files = os.listdir(path)

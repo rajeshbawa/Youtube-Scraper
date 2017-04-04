@@ -1,4 +1,4 @@
-# Youtube-Scrapper
+# Youtube-Scraper
 Python and bash framework to scrape youtube
 
 ## Introduction

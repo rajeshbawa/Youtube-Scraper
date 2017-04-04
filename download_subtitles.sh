@@ -24,7 +24,8 @@ sed -e 's/[0-9][0-9]:[0-9][0-9]:[0-9][0-9].[0-9][0-9][0-9].*%//g' \
 -e 's/<c.colorE5E5E5//g' \
 -e 's/<c.colorCCCCCC//g' \
 -e 's/<\/c<[0-9][0-9]:[0-9][0-9]:[0-9][0-9].[0-9][0-9][0-9]<c//g' \
--e 's/<[0-9][0-9]:[0-9][0-9]:[0-9][0-9].[0-9][0-9][0-9]<c//g' -e 's/<\/c//g' | grep -ve "[0-9][0-9]:[0-9][0-9]:[0-9][0-9]" > \
+-e 's/<[0-9][0-9]:[0-9][0-9]:[0-9][0-9].[0-9][0-9][0-9]<c//g' -e 's/<\/c//g' -e 's/Style\://g' \
+-e 's/\:\:.*;//g' -e 's/\}//g' -e 's/\#//g' -e 's/\[.*\]//g'| grep -ve "[0-9][0-9]:[0-9][0-9]:[0-9][0-9]" > \
 transcript/"`basename "$f" .en.vtt`.txt"
 done
 
@@ -59,6 +60,9 @@ do
 cat "$file" >> output_concatFile.txt
 done
 #fi
+
+iconv -c -f utf-8 -t ascii output_concatFile.txt > output_concatFile1.txt
+mv output_concatFile1.txt output_concatFile.txt
 
 cd ../../
 mv subtitles /Users/rajesh13/Documents/health_datascience/Youtube_scrapping_tool/
