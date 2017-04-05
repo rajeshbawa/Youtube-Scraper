@@ -12,6 +12,9 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from oauth2client.tools import argparser
 from bs4 import BeautifulSoup
+from PIL import Image
+from wordcloud import WordCloud, STOPWORDS
+
 
 os.chdir("/Users/rajesh13/Documents/health_datascience/Youtube_scrapping_tool")
 DEVELOPER_KEY = 'AIzaSyCcD51hH8s5Dc4Rqt-uD3PDWDtRZi1MXpc'
@@ -74,19 +77,34 @@ subprocess.call("/Users/rajesh13/Documents/health_datascience/Youtube_scrapping_
 
 os.chdir("/Users/rajesh13/Documents/health_datascience/Youtube_scrapping_tool")
 all_text = open('output_concatFile.txt').read()
-wordcloud = wordcloud.WordCloud().generate(all_text)
+#wordcloud = wordcloud.WordCloud().generate(all_text)
 
 import matplotlib.pyplot as plt
 plt.switch_backend('agg')
 
-plt.figure(figsize=(10,7))
-plt.imshow(wordcloud, interpolation="bilinear")
+#plt.figure(figsize=(10,7))
+#plt.imshow(wordcloud, interpolation="bilinear")
+#plt.axis('off')
+#plt.savefig("wordcloud1.pdf",bbox_inches = "tight",dpi=600)
+
+#import nltk
+#from nltk.corpus import stopwords
+#nltk.download()
+stopwords1 = set(STOPWORDS)
+#stopwords = set(STOPWORDS)
+wc = WordCloud(stopwords=stopwords1, margin=10,
+               random_state=1, width = 4000, height = 2000).generate(all_text)
+plt.figure(figsize=(10,5))
+plt.imshow(wc, interpolation="bilinear")
 plt.axis('off')
-plt.savefig("wordcloud1.pdf",bbox_inches = "tight")
+plt.savefig("wordcloud1.png",bbox_inches = "tight", dpi=600)
+
+#from rpy2.robjects import r
+#image(wc, col=gray.colors(256)))
 
 plot_show = str(input("Would you like to see the wordcloud?\n Type yes or no\n"))
 if(plot_show == "yes"):
-    subprocess.call("open wordcloud1.pdf", shell=True)
+    subprocess.call("open wordcloud1.png", shell=True)
     print("\033[0m" + "Job is done! \n Please check the folder for results" + "\033[0m")
 else:
     print("\033[0m" + "Job is done! \n Please check the folder for results" + "\033[0m")
